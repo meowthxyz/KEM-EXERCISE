@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="KEM_WPF.Views.UsersTableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KEM_WPF.Views"
+             xmlns:models="clr-namespace:KEM_WPF.Models"
+             mc:Ignorable="d" 
+             Height="Auto"
+             Width="Auto"
+             d:DesignHeight="300">
+    <ListView Grid.Row="1" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" HorizontalAlignment="Stretch" HorizontalContentAlignment ="Stretch">
+        <ListView.View>
+            <models:AutoSizedGridView>
+                <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding first_name}" />
+                <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding last_name}" />
+                <GridViewColumn Header="Email Address" DisplayMemberBinding="{Binding email_address}" />
+                <GridViewColumn Header="User Type" DisplayMemberBinding="{Binding user_type}" />
+                <GridViewColumn Header="Username" DisplayMemberBinding="{Binding user_name}" />
+                <GridViewColumn Header="Password" DisplayMemberBinding="{Binding password}" />
+            </models:AutoSizedGridView>
+        </ListView.View>
+    </ListView>
+
+</UserControl>

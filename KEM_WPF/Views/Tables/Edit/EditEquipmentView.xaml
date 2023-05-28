@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="KEM_WPF.Views.EditEquipmentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KEM_WPF.Views"
+             xmlns:models="clr-namespace:KEM_WPF.Models"
+             mc:Ignorable="d" 
+             Height="Auto" 
+             Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Equipment Id:" TextAlignment="Right" Margin="5"/>
+        <TextBlock Height="28" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Item.equipment_id, Mode=TwoWay}" Margin="5" />
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Serial Number:" TextAlignment="Right" Margin="5"/>
+        <TextBox Height="28" Grid.Row="1" Grid.Column="1" Text="{Binding Path=Item.serial_number, Mode=TwoWay}" Margin="5" />
+        <!--<models:ClickSelectTextBox  Grid.Column="1" Grid.Row="1" Text="{Binding Path=Item.Name, Mode=TwoWay}" Margin="5" />-->
+        
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Description:" TextAlignment="Right" Margin="5"/>
+        <TextBox Height="28" Grid.Row="2" Grid.Column="1" Text="{Binding Path=Item.description, Mode=TwoWay}" Margin="5" />
+        
+        <!--<models:ClickSelectTextBox  Grid.Column="1" Grid.Row="2" Text="{Binding Path=Item.Code, Mode=TwoWay}" Margin="5" />-->
+
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Condition:" TextAlignment="Right" Margin="5"/>
+        <ComboBox Height="28"  Grid.Column="1" Grid.Row="3" Text="{Binding Path=Item.condition, Mode=TwoWay}" ItemsSource="{Binding Path=CategoryList}" Margin="5" IsEditable="True" />
+        
+
+    </Grid>
+</UserControl>
