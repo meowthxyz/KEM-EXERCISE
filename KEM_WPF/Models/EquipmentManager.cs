@@ -35,6 +35,29 @@ namespace KEM_WPF.Models
                 
         }
 
+        public static EquipmentEntity GetEquipmentByID(int ID)
+        {
+            if(ID == 0)
+                return new EquipmentEntity();
+            else
+            {
+                var ee = new EquipmentEntity();
+                using (var context = new KEMDbContext())
+                {
+                    var rs = context.Equipments.FirstOrDefault(w => w.equipment_id == ID);
+                    ee = new EquipmentEntity()
+                    {
+                        equipment_id = rs.equipment_id,
+                        user_id = rs.user_id,
+                        condition = rs.condition,
+                        description = rs.description,
+                        serial_number = rs.serial_number
+                    };
+                }
+                return ee;
+            }
+        }
+
         public static bool NewEquipment(EquipmentEntity item)
         {
             try

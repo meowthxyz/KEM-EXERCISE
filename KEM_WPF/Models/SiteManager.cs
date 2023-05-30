@@ -1,5 +1,6 @@
 ﻿using KEM_WPF.Data;
 using KEM_WPF.Models.Entity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -34,6 +35,15 @@ namespace KEM_WPF.Models
                             RegisteredEquipments = context.RegisteredEquipments.Where(w => w.site_id == item.site_id).ToList()
 
                         });
+                    }
+                    foreach(var ls in list)
+                    {
+                        ls.sRegisteredEquipments = "";
+                        foreach (var re in ls.RegisteredEquipments)
+                        {
+                            var ee = EquipmentManager.GetEquipmentByID(re.equipment_id);
+                            ls.sRegisteredEquipments += string.Format("{0}|{1}", ee.serial_number, ee.description) + Environment.NewLine;
+                        }
                     }
                 }
                 return list;

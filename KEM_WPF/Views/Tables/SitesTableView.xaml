@@ -15,7 +15,7 @@
                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding site_id}" />
                 <GridViewColumn Header="Description" DisplayMemberBinding="{Binding description}" />
                 <GridViewColumn Header="Active" DisplayMemberBinding="{Binding active}" />
-              
+                <GridViewColumn Header="Registered Equipment(s)" DisplayMemberBinding="{Binding sRegisteredEquipments}" />
             </models:AutoSizedGridView>
         </ListView.View>
     </ListView>

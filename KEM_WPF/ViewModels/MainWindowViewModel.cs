@@ -52,7 +52,7 @@ namespace KEM_WPF.ViewModels
         private string _greetings = "";
         private string[] _mainMenu = new string[] { };
         private string[] _mainMenuSuperAdmin = new string[] { "Users", "Equipments", "Sites", "Logout" };
-        private string[] _mainMenuAdmin = new string[] { "Equipments", "Sites", "Logout" };
+        private string[] _mainMenuAdmin = new string[] { "Equipments", "Sites", "UpdateProfile", "Logout" };
 
         private SitesViewModel _site = new SitesViewModel();
         private EquipmentsViewModel _equipment = new EquipmentsViewModel();
@@ -138,6 +138,14 @@ namespace KEM_WPF.ViewModels
                 case "Sites":
                     CurrentViewModel = _site;
                     ((RelayCommand)_site.RefreshListCommand).CheckAndExecute(_site);
+                    break;
+                case "UpdateProfile":
+
+                    EditUserViewModel EUVM = new EditUserViewModel(UserManager._LoggedUser.user_name, UserManager._LoggedUser.first_name, UserManager._LoggedUser.last_name, UserManager._LoggedUser.email_address, UserManager._LoggedUser.user_type);
+                    EditUserWindow EUV = new EditUserWindow() { DataContext = EUVM };
+                    EUVM.EditWindow = EUV;
+                    EUV.ShowDialog();
+
                     break;
                 case "Logout":
                     //reset views/menus

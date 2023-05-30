@@ -16,6 +16,7 @@ namespace KEM_WPF.Models.Entity
             this.SelectedRegisteredEquipments = new List<RegisteredEquipment>();
         }
 
+        public string sRegisteredEquipments { get; set; }
         public List<RegisteredEquipment> RegisteredEquipments { get; set; }
         public List<RegisteredEquipment> SelectedRegisteredEquipments { get; set; }
     }
