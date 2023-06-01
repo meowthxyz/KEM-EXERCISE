@@ -35,7 +35,7 @@ namespace KEM_WPF.ViewModels
                 // Login.
                 LoginWindow LW = new LoginWindow();
                 LW.ShowDialog();
-                if (UserManager._LoggedUser.user_name == "")
+                if (UserManager._LoggedUser.user_name == "" || UserManager._LoggedUser.user_name == null)
                 {
                     CloseWindow();
                     return;
@@ -156,10 +156,22 @@ namespace KEM_WPF.ViewModels
 
                     //end session
                     UserManager.ClearLoggedUser();
+                    MainWindow?.Hide();
 
                     // Login.
                     LoginWindow LW = new LoginWindow();
                     LW.ShowDialog();
+                    
+
+                    if (UserManager._LoggedUser.user_name == "" || UserManager._LoggedUser.user_name == null)
+                    {
+                        CloseWindow();
+                        return;
+                    }
+                    else
+                    {
+                        MainWindow?.Show();
+                    }
 
                     //set menu
                     if (UserManager._LoggedUser.user_type == "SuperAdmin")

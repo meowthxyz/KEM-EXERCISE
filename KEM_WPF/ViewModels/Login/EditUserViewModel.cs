@@ -123,54 +123,57 @@ namespace KEM_WPF.ViewModels
             //PasswordBox pwBox = (PasswordBox)parameter;
             //string OldPassword = pwBox.Password;
 
-            if (string.IsNullOrWhiteSpace(_oldUserID) ||
-                string.IsNullOrWhiteSpace(OldPassword) ||
-                string.IsNullOrWhiteSpace(UserID) ||
-                string.IsNullOrWhiteSpace(Password) ||
-                string.IsNullOrWhiteSpace(Confirm))
+            //if (string.IsNullOrWhiteSpace(_oldUserID) ||
+            //    string.IsNullOrWhiteSpace(OldPassword) ||
+            //    string.IsNullOrWhiteSpace(UserID) ||
+            //    string.IsNullOrWhiteSpace(Password) ||
+            //    string.IsNullOrWhiteSpace(Confirm))
+            //{
+            //    NotificationProvider.Error("Edit user error", "Please fill the Username and Password fields.");
+            //}
+            //else
+            //{
+            try
             {
-                NotificationProvider.Error("Edit user error", "Please fill the Username and Password fields.");
+                if (UserManager.ModifyUser(_oldUserID, OldPassword, UserID, Password, Confirm, FirstName, LastName, EmailAddress, UserType))
+                {
+                    NotificationProvider.Info(String.Format("User modified: {0}", _oldUserID), String.Format("New username: {0}", UserID));
+                    EditWindow?.Close();
+                }
+                else
+                {
+                    NotificationProvider.Error("Edit user error", "Database error");
+                }
             }
-            else
+            catch (ArgumentException e)
             {
-                try
+                switch (e.ParamName)
                 {
-                    if (UserManager.ModifyUser(_oldUserID, OldPassword, UserID, Password, Confirm, FirstName, LastName, EmailAddress, UserType))
-                    {
-                        NotificationProvider.Info(String.Format("User modified: {0}", _oldUserID), String.Format("New username: {0}", UserID));
-                        EditWindow?.Close();
-                    }
-                    else
-                    {
-                        NotificationProvider.Error("Edit user error", "Database error");
-                    }
+                    case "oldUserID":
+                        NotificationProvider.Error("Edit user error", "The original username is missing from the database.");
+                        break;
+                    case "oldPassword":
+                        NotificationProvider.Error("Edit user error", "The old password is wrong.");
+                        break;
+                    case "newUserId":
+                        NotificationProvider.Error("Edit user error", "The new username already exist.");
+                        break;
+                    case "password":
+                        NotificationProvider.Error("Edit user error", "Please fill the password field.");
+                        break;
+                    case "confirm":
+                        NotificationProvider.Error("Edit user error", "Password does not match the confirm password.");
+                        break;
+                    case "noRecord":
+                        NotificationProvider.Error("Edit user error", "User record not found.");
+                        break;
+                    default:
+                        NotificationProvider.Error("Edit user error", "UserLogin error");
+                        break;
                 }
-                catch (ArgumentException e)
-                {
-                    switch (e.ParamName)
-                    {
-                        case "oldUserID":
-                            NotificationProvider.Error("Edit user error", "The original username is missing from the database.");
-                            break;
-                        case "oldPassword":
-                            NotificationProvider.Error("Edit user error", "The old password is wrong.");
-                            break;
-                        case "newUserId":
-                            NotificationProvider.Error("Edit user error", "The new username already exist.");
-                            break;
-                        case "password":
-                            NotificationProvider.Error("Edit user error", "Please fill the password field.");
-                            break;
-                        case "confirm":
-                            NotificationProvider.Error("Edit user error", "Password does not match the confirm password.");
-                            break;
-                        default:
-                            NotificationProvider.Error("Edit user error", "UserLogin error");
-                            break;
-                    }
-                }
+            }
 
-            }
+            //}
         }
     }
 }

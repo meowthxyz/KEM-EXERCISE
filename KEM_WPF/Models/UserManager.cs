@@ -63,6 +63,7 @@ namespace KEM_WPF.Models
                     var checkUser = context.Users.FirstOrDefault(f => f.user_name == userName);
                     if(checkUser != null)
                     {
+                        //throw new System.ArgumentException("Username already exists.", "recordExist");
                         return false;
                     }
                     var user = new User();
@@ -96,29 +97,50 @@ namespace KEM_WPF.Models
 
         public static bool ModifyUser(string oldUserName, string oldPassword, string userName, string password, string confirm, string firstName, string lastName, string emailAddress, string userType)
         {
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new System.ArgumentException("Wrong password.", "password");
-                
-            }
-            else if (string.IsNullOrWhiteSpace(confirm) || password != confirm)
-            {
+            //if (!string.IsNullOrWhiteSpace(oldPassword) && string.IsNullOrWhiteSpace(password))
+            //{
+            //    throw new System.ArgumentException("Wrong password.", "password");
+
+            //}
+            //else
+            if (!string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(confirm) && (password != confirm))
+            { 
                 throw new System.ArgumentException("Wrong confirm password.", "confirm");
             }
-            
+
             try
             {
                 using (var context = new KEMDbContext())
                 {
-                    var user = context.Users.FirstOrDefault(f => f.user_name == userName && f.password == oldPassword);
-                    if(user == null)
+                    var user = context.Users.FirstOrDefault(f => f.user_name == userName);
+                    // && f.password == oldPassword);
+
+                    //if(!string.IsNullOrWhiteSpace(oldPassword) && !string.IsNullOrWhiteSpace(password)
+                    //        && !string.IsNullOrWhiteSpace(confirm) )
+                    //{
+                    //    user = context.Users.FirstOrDefault(f => f.user_name == userName && f.password == oldPassword);
+
+                    //    if(user == null)
+                    //    {
+                    //        throw new System.ArgumentException("Wrong password.", "oldPassword");
+                    //    }
+                    //}
+
+                    if (user == null)
                     {
-                        throw new System.ArgumentException("Wrong old password.", "oldPassword");
+                        throw new System.ArgumentException("No user record.", "noRecord");
                     }
                     else
                     {
-                        user.user_name = userName;
-                        user.password = confirm;
+                        if (!string.IsNullOrWhiteSpace(password) 
+                            && !string.IsNullOrWhiteSpace(confirm) 
+                            && (password == confirm))
+                        {
+                            user.password = confirm;
+                        }
+
+                        //user.user_name = userName;
+
                         user.first_name = firstName;
                         user.last_name = lastName;
                         user.email_address = emailAddress;
